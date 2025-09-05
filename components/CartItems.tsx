@@ -1,8 +1,9 @@
 'use client'
 
 import { useCart } from '@/contexts/CartContext'
-import Image from 'next/image'
 import { TrashIcon } from '@heroicons/react/24/outline'
+import BookImage from './BookImage'
+import Link from 'next/link'
 
 export default function CartItems() {
   const { state, dispatch } = useCart()
@@ -12,12 +13,12 @@ export default function CartItems() {
       <div className="bg-white rounded-lg shadow-md p-8 text-center">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Your cart is empty</h2>
         <p className="text-gray-600 mb-6">Add some books to get started!</p>
-        <a
+        <Link
           href="/books"
           className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
         >
           Browse Books
-        </a>
+        </Link>
       </div>
     )
   }
@@ -34,11 +35,11 @@ export default function CartItems() {
             {/* Book Image */}
             <div className="flex-shrink-0">
               <div className="w-16 h-24 relative bg-gray-100 rounded">
-                <Image
-                  src={item.image || '/api/placeholder/64/96'}
+                <BookImage
+                  src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover rounded"
+                  className="rounded"
                 />
               </div>
             </div>
@@ -50,7 +51,7 @@ export default function CartItems() {
               </h3>
               <p className="text-sm text-gray-600">{item.author}</p>
               <p className="text-lg font-semibold text-indigo-600">
-                ${item.price.toFixed(2)}
+                KES {item.price.toFixed(2)}
               </p>
             </div>
             

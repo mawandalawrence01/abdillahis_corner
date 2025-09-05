@@ -452,7 +452,7 @@ export default function AdminDashboard() {
                                   {order.user.name || order.user.email}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                  ${order.total.toFixed(2)}
+                                  KES {order.total.toFixed(2)}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -594,7 +594,7 @@ export default function AdminDashboard() {
                             {book.category?.name || 'No category'}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${book.price.toFixed(2)}
+                            KES {book.price.toFixed(2)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {book.stock}
@@ -787,7 +787,7 @@ export default function AdminDashboard() {
                             {order.items.length} item{order.items.length !== 1 ? 's' : ''}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${order.total.toFixed(2)}
+                            KES {order.total.toFixed(2)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <select

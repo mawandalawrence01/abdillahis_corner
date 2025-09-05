@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn, getSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpenIcon } from '@heroicons/react/24/outline'
@@ -31,7 +31,7 @@ export default function SignIn() {
         router.push('/')
         router.refresh()
       }
-    } catch (error) {
+    } catch {
       setError('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
@@ -50,7 +50,7 @@ export default function SignIn() {
             <BookOpenIcon className="h-12 w-12 text-indigo-600" />
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to Abdillahi's Corner
+            Sign in to Abdillahi&apos;s Corner
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or{' '}

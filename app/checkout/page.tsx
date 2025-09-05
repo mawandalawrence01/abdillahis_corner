@@ -21,7 +21,7 @@ export default function CheckoutPage() {
     city: '',
     state: '',
     zipCode: '',
-    country: 'US'
+    country: 'KE'
   })
 
   if (!session) {
@@ -62,7 +62,7 @@ export default function CheckoutPage() {
     }
   }
 
-  const shipping = cartState.total > 50 ? 0 : 5.99
+  const shipping = cartState.total > 5000 ? 0 : 500 // Free shipping over KES 5,000, otherwise KES 500
   const tax = cartState.total * 0.08
   const finalTotal = cartState.total + shipping + tax
 
@@ -207,29 +207,29 @@ export default function CheckoutPage() {
                   {cartState.items.map((item) => (
                     <div key={item.id} className="flex justify-between text-sm">
                       <span>{item.title} x {item.quantity}</span>
-                      <span>${(item.price * item.quantity).toFixed(2)}</span>
+                      <span>KES {(item.price * item.quantity).toFixed(2)}</span>
                     </div>
                   ))}
                   
                   <div className="border-t border-gray-200 pt-3 space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>Subtotal</span>
-                      <span>${cartState.total.toFixed(2)}</span>
+                      <span>KES {cartState.total.toFixed(2)}</span>
                     </div>
                     
                     <div className="flex justify-between text-sm">
                       <span>Shipping</span>
-                      <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+                      <span>{shipping === 0 ? 'Free' : `KES ${shipping.toFixed(2)}`}</span>
                     </div>
                     
                     <div className="flex justify-between text-sm">
                       <span>Tax</span>
-                      <span>${tax.toFixed(2)}</span>
+                      <span>KES {tax.toFixed(2)}</span>
                     </div>
                     
                     <div className="flex justify-between text-lg font-semibold border-t border-gray-200 pt-2">
                       <span>Total</span>
-                      <span>${finalTotal.toFixed(2)}</span>
+                      <span>KES {finalTotal.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>

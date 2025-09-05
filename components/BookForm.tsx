@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect, useRef } from 'react'
+import { XMarkIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 
 interface Book {
   id?: string
@@ -52,6 +53,10 @@ export default function BookForm({ book, categories, isOpen, onClose, onSave }: 
   })
 
   const [isLoading, setIsLoading] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [imageInputType, setImageInputType] = useState<'url' | 'upload'>('url')
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (book) {
@@ -68,6 +73,10 @@ export default function BookForm({ book, categories, isOpen, onClose, onSave }: 
         featured: book.featured,
         categoryId: book.categoryId
       })
+      if (book.image) {
+        setImagePreview(book.image)
+        setImageInputType(book.image.startsWith('/images/') ? 'upload' : 'url')
+      }
     } else {
       setFormData({
         title: '',
@@ -82,8 +91,51 @@ export default function BookForm({ book, categories, isOpen, onClose, onSave }: 
         featured: false,
         categoryId: ''
       })
+      setImagePreview(null)
+      setImageInputType('url')
     }
   }, [book])
+
+  const handleFileUpload = async (file: File) => {
+    setIsUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const response = await fetch('/api/upload/image', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.message || 'Upload failed')
+      }
+
+      const result = await response.json()
+      setFormData(prev => ({ ...prev, image: result.imageUrl }))
+      setImagePreview(result.imageUrl)
+      return result.imageUrl
+    } catch (error) {
+      console.error('Error uploading file:', error)
+      alert('Error uploading image: ' + (error as Error).message)
+      throw error
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      await handleFileUpload(file)
+    }
+  }
+
+  const handleImageUrlChange = (url: string) => {
+    setFormData(prev => ({ ...prev, image: url }))
+    setImagePreview(url)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -242,30 +294,122 @@ export default function BookForm({ book, categories, isOpen, onClose, onSave }: 
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Published Date
-              </label>
-              <input
-                type="date"
-                value={formData.publishedAt}
-                onChange={(e) => setFormData({ ...formData, publishedAt: e.target.value })}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Published Date
+            </label>
+            <input
+              type="date"
+              value={formData.publishedAt}
+              onChange={(e) => setFormData({ ...formData, publishedAt: e.target.value })}
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          {/* Image Upload Section */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Book Cover Image
+            </label>
+            
+            {/* Image Input Type Toggle */}
+            <div className="flex space-x-4 mb-4">
+              <button
+                type="button"
+                onClick={() => setImageInputType('url')}
+                className={`px-4 py-2 rounded-md text-sm font-medium ${
+                  imageInputType === 'url'
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                Image URL
+              </button>
+              <button
+                type="button"
+                onClick={() => setImageInputType('upload')}
+                className={`px-4 py-2 rounded-md text-sm font-medium ${
+                  imageInputType === 'upload'
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                Upload File
+              </button>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Image URL
-              </label>
-              <input
-                type="url"
-                value={formData.image}
-                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
+            {/* Image Input Fields */}
+            {imageInputType === 'url' ? (
+              <div>
+                <input
+                  type="url"
+                  value={formData.image}
+                  onChange={(e) => handleImageUrlChange(e.target.value)}
+                  placeholder="https://example.com/image.jpg"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+            ) : (
+              <div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/jpg,image/png,image/webp"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                  className="w-full border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-indigo-400 hover:bg-indigo-50 transition-colors disabled:opacity-50"
+                >
+                  {isUploading ? (
+                    <div className="flex flex-col items-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mb-2"></div>
+                      <span className="text-sm text-gray-600">Uploading...</span>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center">
+                      <CloudArrowUpIcon className="h-8 w-8 text-gray-400 mb-2" />
+                      <span className="text-sm text-gray-600">
+                        Click to upload or drag and drop
+                      </span>
+                      <span className="text-xs text-gray-500 mt-1">
+                        PNG, JPG, WebP up to 5MB
+                      </span>
+                    </div>
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Image Preview */}
+            {imagePreview && (
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Preview
+                </label>
+                <div className="relative w-32 h-48 border border-gray-300 rounded-lg overflow-hidden">
+                  <Image
+                    src={imagePreview}
+                    alt="Book cover preview"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImagePreview(null)
+                    setFormData(prev => ({ ...prev, image: '' }))
+                  }}
+                  className="mt-2 text-sm text-red-600 hover:text-red-700"
+                >
+                  Remove image
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center">
@@ -291,10 +435,10 @@ export default function BookForm({ book, categories, isOpen, onClose, onSave }: 
             </button>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || isUploading}
               className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50"
             >
-              {isLoading ? 'Saving...' : (book ? 'Update' : 'Create')}
+              {isLoading ? 'Saving...' : isUploading ? 'Uploading...' : (book ? 'Update' : 'Create')}
             </button>
           </div>
         </form>

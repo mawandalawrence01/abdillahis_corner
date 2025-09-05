@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit
 
     // Build where clause
-    const where: any = {}
+    const where: Record<string, unknown> = {}
 
     // Search by title or author
     if (search) {
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Build orderBy clause
-    let orderBy: any = { createdAt: 'desc' } // default
+    let orderBy: Record<string, string> = { createdAt: 'desc' } // default
 
     switch (sort) {
       case 'oldest':

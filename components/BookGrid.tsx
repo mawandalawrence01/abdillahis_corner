@@ -3,9 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useCart } from '@/contexts/CartContext'
-import { StarIcon } from '@heroicons/react/24/solid'
+import BookImage from './BookImage'
 
 interface Book {
   id: string
@@ -117,15 +116,14 @@ export default function BookGrid({ categorySlug }: BookGridProps) {
             key={book.id}
             className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
           >
-            <Link href={`/books/${book.id}`}>
-              <div className="aspect-[2/3] relative">
-                <Image
-                  src={book.image || '/api/placeholder/200/300'}
-                  alt={book.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+                          <Link href={`/books/${book.id}`}>
+                <div className="aspect-[2/3] relative">
+                  <BookImage
+                    src={book.image}
+                    alt={book.title}
+                    fill
+                  />
+                </div>
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">
                   {book.title}
@@ -135,7 +133,7 @@ export default function BookGrid({ categorySlug }: BookGridProps) {
                 
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-indigo-600">
-                    ${book.price.toFixed(2)}
+                    KES {book.price.toFixed(2)}
                   </span>
                   <button
                     onClick={(e) => {

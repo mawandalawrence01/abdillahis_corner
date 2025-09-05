@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '@/contexts/CartContext'
 import { StarIcon } from '@heroicons/react/24/solid'
 import { HeartIcon, ShareIcon } from '@heroicons/react/24/outline'
+import BookImage from './BookImage'
 
 interface Book {
   id: string
@@ -63,11 +63,10 @@ export default function BookDetails({ book }: BookDetailsProps) {
         {/* Book Image */}
         <div className="space-y-4">
           <div className="aspect-[2/3] relative bg-gray-100 rounded-lg overflow-hidden">
-            <Image
-              src={book.image || '/api/placeholder/400/600'}
+            <BookImage
+              src={book.image}
               alt={book.title}
               fill
-              className="object-cover"
             />
           </div>
           
@@ -125,7 +124,7 @@ export default function BookDetails({ book }: BookDetailsProps) {
 
           {/* Price */}
           <div className="text-3xl font-bold text-indigo-600">
-            ${Number(book.price).toFixed(2)}
+            KES {Number(book.price).toFixed(2)}
           </div>
 
           {/* Stock Status */}

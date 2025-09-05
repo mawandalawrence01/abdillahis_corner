@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <BookOpenIcon className="h-8 w-8 text-indigo-400" />
-              <span className="text-xl font-bold">Abdillahi's Corner</span>
+              <span className="text-xl font-bold">Abdillahi&apos;s Corner</span>
             </Link>
             <p className="text-gray-300 mb-4 max-w-md">
               Your trusted online bookstore for quality books across all genres. 
@@ -95,7 +95,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © {new Date().getFullYear()} Abdillahi's Corner. All rights reserved.
+            © {new Date().getFullYear()} Abdillahi&apos;s Corner. All rights reserved.
           </p>
         </div>
       </div>

@@ -22,7 +22,7 @@ export default function CartSummary() {
     return null
   }
 
-  const shipping = state.total > 50 ? 0 : 5.99
+  const shipping = state.total > 5000 ? 0 : 500 // Free shipping over KES 5,000, otherwise KES 500
   const tax = state.total * 0.08 // 8% tax
   const finalTotal = state.total + shipping + tax
 
@@ -33,25 +33,25 @@ export default function CartSummary() {
       <div className="space-y-3">
         <div className="flex justify-between text-sm">
           <span>Subtotal ({state.itemCount} items)</span>
-          <span>${state.total.toFixed(2)}</span>
+          <span>KES {state.total.toFixed(2)}</span>
         </div>
         
         <div className="flex justify-between text-sm">
           <span>Shipping</span>
           <span>
-            {shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}
+            {shipping === 0 ? 'Free' : `KES ${shipping.toFixed(2)}`}
           </span>
         </div>
         
         <div className="flex justify-between text-sm">
           <span>Tax</span>
-          <span>${tax.toFixed(2)}</span>
+          <span>KES {tax.toFixed(2)}</span>
         </div>
         
         <div className="border-t border-gray-200 pt-3">
           <div className="flex justify-between text-lg font-semibold">
             <span>Total</span>
-            <span>${finalTotal.toFixed(2)}</span>
+            <span>KES {finalTotal.toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -72,10 +72,10 @@ export default function CartSummary() {
         </button>
       </div>
       
-      {state.total < 50 && (
+      {state.total < 5000 && (
         <div className="mt-4 p-3 bg-blue-50 rounded-lg">
           <p className="text-sm text-blue-800">
-            Add ${(50 - state.total).toFixed(2)} more for free shipping!
+            Add KES {(5000 - state.total).toFixed(2)} more for free shipping!
           </p>
         </div>
       )}

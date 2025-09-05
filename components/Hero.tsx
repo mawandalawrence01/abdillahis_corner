@@ -21,7 +21,7 @@ export default function Hero() {
         <div className="text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Welcome to{' '}
-            <span className="text-yellow-300">Abdillahi's Corner</span>
+            <span className="text-yellow-300">Abdillahi&apos;s Corner</span>
           </h1>
           <p className="text-xl sm:text-2xl mb-8 max-w-3xl mx-auto text-indigo-100">
             Discover your next favorite book from our extensive collection of fiction, 

@@ -24,7 +24,7 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
               </h1>
               {query && (
                 <p className="text-lg text-gray-600">
-                  Results for "{query}"
+                  Results for &quot;{query}&quot;
                 </p>
               )}
             </div>

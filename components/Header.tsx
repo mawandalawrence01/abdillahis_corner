@@ -40,7 +40,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <BookOpenIcon className="h-8 w-8 text-indigo-600" />
-            <span className="text-xl font-bold text-gray-900">Abdillahi's Corner</span>
+            <span className="text-xl font-bold text-gray-900">Abdillahi&apos;s Corner</span>
           </Link>
 
           {/* Search Bar - Hidden on mobile */}

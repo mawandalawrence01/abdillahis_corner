@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { StarIcon } from '@heroicons/react/24/solid'
 import { useEffect, useState } from 'react'
+import BookImage from './BookImage'
 
 interface BestSeller {
   id: string
@@ -114,11 +114,10 @@ export default function BestSellers() {
             >
               <Link href={`/books/${book.id}`}>
                 <div className="aspect-[2/3] relative">
-                  <Image
+                  <BookImage
                     src={book.image}
                     alt={book.title}
                     fill
-                    className="object-cover"
                   />
                 </div>
                 <div className="p-4">
@@ -148,7 +147,7 @@ export default function BestSellers() {
                   
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold text-indigo-600">
-                      ${book.price}
+                      KES {book.price}
                     </span>
                     <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
                       Add to Cart

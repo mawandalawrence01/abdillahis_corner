@@ -14,10 +14,10 @@ const categories = [
 ]
 
 const priceRanges = [
-  { id: '0-10', name: 'Under $10', min: 0, max: 10 },
-  { id: '10-20', name: '$10 - $20', min: 10, max: 20 },
-  { id: '20-30', name: '$20 - $30', min: 20, max: 30 },
-  { id: '30+', name: 'Over $30', min: 30, max: null }
+  { id: '0-1500', name: 'Under KES 1,500', min: 0, max: 1500 },
+  { id: '1500-2000', name: 'KES 1,500 - KES 2,000', min: 1500, max: 2000 },
+  { id: '2000-3000', name: 'KES 2,000 - KES 3,000', min: 2000, max: 3000 },
+  { id: '3000+', name: 'Over KES 3,000', min: 3000, max: null }
 ]
 
 export default function BookFilters() {
