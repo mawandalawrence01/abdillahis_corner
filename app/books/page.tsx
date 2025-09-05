@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import BookGrid from '@/components/BookGrid'
@@ -25,12 +26,16 @@ export default function BooksPage() {
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Filters Sidebar */}
             <div className="lg:w-1/4">
-              <BookFilters />
+              <Suspense fallback={<div className="text-center py-8">Loading filters...</div>}>
+                <BookFilters />
+              </Suspense>
             </div>
             
             {/* Books Grid */}
             <div className="lg:w-3/4">
-              <BookGrid />
+              <Suspense fallback={<div className="text-center py-8">Loading books...</div>}>
+                <BookGrid />
+              </Suspense>
             </div>
           </div>
         </div>
