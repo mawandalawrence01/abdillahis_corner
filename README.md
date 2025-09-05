@@ -1,178 +1,228 @@
 # Abdillahi's Corner - Online Bookstore
 
-A modern, mobile-first Next.js e-commerce website for selling books online.
+A modern, full-featured online bookstore built with Next.js, featuring book management, user authentication, shopping cart, and order processing.
 
-## Features
+## 🚀 Features
 
-- **Modern UI**: Clean, minimal design optimized for mobile devices using TailwindCSS
-- **Authentication**: User sign up/login with email & password, plus optional Google OAuth
-- **Book Management**: Browse books by categories, search functionality, and detailed book pages
-- **Shopping Cart**: Add/remove books, update quantities, and manage cart items
-- **Checkout Process**: Complete order flow with shipping information
-- **Admin Dashboard**: Simple panel to manage books and categories (admin users only)
-- **Database**: PostgreSQL with Prisma ORM for data management
-- **Responsive Design**: Mobile-first approach with responsive layouts
+- **Book Management**: Full CRUD operations with image upload support
+- **User Authentication**: NextAuth.js with Google OAuth and credentials
+- **Shopping Cart**: Persistent cart with local storage
+- **Order Processing**: Complete order management system
+- **Admin Dashboard**: Comprehensive admin interface
+- **Search & Filters**: Advanced book filtering and search
+- **Responsive Design**: Mobile-first, responsive UI
+- **Currency Support**: Kenyan Shillings (KES) pricing
+- **Image Support**: Both file upload and external URL support
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 15, React 19, TypeScript, TailwindCSS
-- **Backend**: Next.js API Routes, NextAuth.js
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS
 - **Database**: PostgreSQL with Prisma ORM
-- **Authentication**: NextAuth.js with email/password and Google OAuth
-- **Styling**: TailwindCSS with Heroicons
-- **State Management**: React Context for cart management
+- **Authentication**: NextAuth.js
+- **Icons**: Heroicons
+- **Deployment**: Vercel
 
-## Getting Started
-
-### Prerequisites
+## 📋 Prerequisites
 
 - Node.js 18+ 
 - PostgreSQL database
-- Google OAuth credentials (optional)
+- Vercel account (for deployment)
 
-### Installation
+## 🚀 Quick Start
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd abdillahis_corner
-```
+### Local Development
 
-2. Install dependencies:
-```bash
-npm install
-```
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd abdillahis_corner
+   ```
 
-3. Set up environment variables:
-Create a `.env` file in the root directory with the following variables:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```env
-# Database
-DATABASE_URL="postgresql://username:password@localhost:5432/abdillahis_corner?schema=public"
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+   
+   Update `.env.local` with your values:
+   ```env
+   DATABASE_URL="postgresql://username:password@localhost:5432/abdillahis_corner"
+   NEXTAUTH_URL="http://localhost:3000"
+   NEXTAUTH_SECRET="your-secret-key-here"
+   GOOGLE_CLIENT_ID="your-google-client-id"
+   GOOGLE_CLIENT_SECRET="your-google-client-secret"
+   ```
 
-# NextAuth.js
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-key-here"
+4. **Set up the database**
+   ```bash
+   npx prisma migrate dev
+   npm run db:seed
+   ```
 
-# OAuth Providers (optional)
-GOOGLE_CLIENT_ID=""
-GOOGLE_CLIENT_SECRET=""
+5. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-# Stripe (for future payment integration)
-STRIPE_PUBLISHABLE_KEY=""
-STRIPE_SECRET_KEY=""
-STRIPE_WEBHOOK_SECRET=""
-```
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-4. Set up the database:
-```bash
-# Generate Prisma client
-npx prisma generate
+### Production Deployment
 
-# Run database migrations
-npx prisma migrate dev
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
-# Seed the database with sample data
-npm run db:seed
-```
-
-5. Start the development server:
-```bash
-npm run dev
-```
-
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Default Admin Account
-
-After seeding the database, you can log in with the admin account:
-- **Email**: admin@abdillahiscorner.com
-- **Password**: admin123
-
-## Project Structure
+## 📁 Project Structure
 
 ```
-src/
+abdillahis_corner/
 ├── app/                    # Next.js app directory
 │   ├── api/               # API routes
 │   ├── auth/              # Authentication pages
-│   ├── books/             # Book pages
-│   ├── categories/        # Category pages
-│   ├── cart/              # Shopping cart
-│   ├── checkout/          # Checkout process
-│   └── admin/             # Admin dashboard
+│   ├── admin/             # Admin dashboard
+│   └── ...
 ├── components/            # React components
-├── contexts/              # React contexts (cart management)
+├── contexts/              # React contexts
 ├── lib/                   # Utility libraries
+├── prisma/                # Database schema and migrations
+├── public/                # Static assets
 └── types/                 # TypeScript type definitions
-
-prisma/
-├── schema.prisma          # Database schema
-└── seed.ts               # Database seeding script
 ```
 
-## Key Features
+## 🔧 Available Scripts
 
-### Home Page
-- Hero section with search functionality
-- Featured book categories
-- Best-selling books showcase
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run db:seed` - Seed the database
+- `npm run db:migrate` - Run database migrations
+- `npm run db:generate` - Generate Prisma client
 
-### Book Pages
-- Book listing with filters (category, price range)
-- Individual book detail pages
-- Search functionality
-- Add to cart functionality
+## 🗄️ Database Schema
 
-### Shopping Cart
-- Add/remove books
-- Update quantities
-- Cart persistence in localStorage
-- Order summary with tax and shipping
+The application uses PostgreSQL with the following main entities:
 
-### Authentication
-- Email/password registration and login
-- Google OAuth integration
-- Protected routes
-- User role management (Customer/Admin)
+- **Users**: Customer and admin users
+- **Categories**: Book categories
+- **Books**: Book inventory
+- **Orders**: Customer orders
+- **OrderItems**: Individual items in orders
+- **CartItems**: Shopping cart items
 
-### Admin Dashboard
-- Overview statistics
-- Book management (planned)
-- Category management (planned)
-- Order management (planned)
-- User management (planned)
+## 🔐 Authentication
 
-## Database Schema
+The application supports multiple authentication methods:
 
-The application uses the following main entities:
-- **Users**: Customer and admin accounts
-- **Categories**: Book categories (Fiction, Non-Fiction, etc.)
-- **Books**: Book information with pricing and inventory
-- **Orders**: Customer orders and order items
-- **Cart Items**: Shopping cart management
+- **Credentials**: Email/password authentication
+- **Google OAuth**: Social login with Google
+- **Role-based Access**: Admin and customer roles
 
-## Future Enhancements
+## 🛒 Shopping Features
 
-- [ ] Stripe payment integration
-- [ ] Order management system
-- [ ] Book inventory management
-- [ ] User profile pages
-- [ ] Order history
-- [ ] Email notifications
-- [ ] Book reviews and ratings
-- [ ] Wishlist functionality
-- [ ] Advanced search filters
-- [ ] Book recommendations
+- **Product Catalog**: Browse books by category
+- **Search**: Full-text search across titles and authors
+- **Filters**: Filter by category, price range, etc.
+- **Shopping Cart**: Add/remove items, quantity management
+- **Checkout**: Complete order processing
+- **Order Tracking**: View order status and history
 
-## Contributing
+## 👨‍💼 Admin Features
+
+- **Dashboard**: Overview of sales, orders, and inventory
+- **Book Management**: Add, edit, delete books
+- **Category Management**: Manage book categories
+- **Order Management**: Process and track orders
+- **User Management**: View and manage users
+- **Analytics**: Sales and performance metrics
+
+## 🎨 UI/UX Features
+
+- **Responsive Design**: Works on all device sizes
+- **Modern UI**: Clean, professional design
+- **Loading States**: Smooth loading indicators
+- **Error Handling**: User-friendly error messages
+- **Accessibility**: WCAG compliant components
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `DATABASE_URL` | PostgreSQL connection string | Yes |
+| `NEXTAUTH_URL` | Application URL | Yes |
+| `NEXTAUTH_SECRET` | Secret for JWT signing | Yes |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID | No |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret | No |
+
+### Image Configuration
+
+The application supports:
+- **File Uploads**: Images stored in `/public/images/books/`
+- **External URLs**: Any image URL from any domain
+- **Fallback**: Default book icon for missing images
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Connect your repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push to main branch
+
+### Other Platforms
+
+The application can be deployed to any platform that supports Next.js:
+- Netlify
+- Railway
+- DigitalOcean App Platform
+- AWS Amplify
+
+## 📊 Performance
+
+- **Static Generation**: Pre-rendered pages for better performance
+- **Image Optimization**: Next.js Image component with lazy loading
+- **Code Splitting**: Automatic code splitting for smaller bundles
+- **Caching**: Optimized caching strategies
+
+## 🔒 Security
+
+- **Authentication**: Secure JWT-based authentication
+- **CSRF Protection**: Built-in CSRF protection
+- **SQL Injection**: Protected by Prisma ORM
+- **Environment Variables**: Secure handling of secrets
+- **Input Validation**: Server-side validation for all inputs
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Test thoroughly
+4. Add tests if applicable
 5. Submit a pull request
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License.
+
+## 🆘 Support
+
+For support and questions:
+1. Check the [DEPLOYMENT.md](./DEPLOYMENT.md) guide
+2. Review the documentation
+3. Open an issue on GitHub
+
+## 🎯 Roadmap
+
+- [ ] Payment integration (Stripe)
+- [ ] Email notifications
+- [ ] Advanced analytics
+- [ ] Multi-language support
+- [ ] Mobile app
+- [ ] Inventory management
+- [ ] Customer reviews and ratings

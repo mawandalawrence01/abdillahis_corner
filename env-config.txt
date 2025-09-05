@@ -1,0 +1,29 @@
+# Environment Variables Configuration
+# Copy this content to your .env.local file
+
+# Database Configuration
+# Replace with your actual PostgreSQL database URL
+DATABASE_URL="postgresql://username:password@localhost:5432/abdillahis_corner"
+
+# NextAuth.js Configuration
+# For local development
+NEXTAUTH_URL="http://localhost:3000"
+# For production, replace with your Vercel app URL
+# NEXTAUTH_URL="https://your-app-name.vercel.app"
+
+# NextAuth Secret - Generated secure key
+NEXTAUTH_SECRET="8bExFsDrKE65TH1pgjx/zicDCeAvW8aFcUttgIQqoNo="
+
+# Google OAuth Configuration (Optional)
+# Get these from Google Cloud Console
+GOOGLE_CLIENT_ID="your-google-client-id-here"
+GOOGLE_CLIENT_SECRET="your-google-client-secret-here"
+
+# Production Database URLs (for Vercel deployment)
+# Uncomment and replace with your production database URL
+# DATABASE_URL="postgresql://username:password@host:port/database"
+
+# Vercel Environment Variables
+# These will be set in Vercel dashboard
+# NEXTAUTH_URL="https://your-app.vercel.app"
+# DATABASE_URL="postgresql://username:password@host:port/database"
