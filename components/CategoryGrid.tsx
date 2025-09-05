@@ -5,8 +5,8 @@ interface Category {
   id: string
   name: string
   slug: string
-  description?: string
-  image?: string
+  description: string | null
+  image: string | null
   _count: {
     books: number
   }

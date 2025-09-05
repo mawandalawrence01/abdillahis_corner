@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit
 
     // Build where clause
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {}
 
     // Search by title or author
@@ -46,6 +47,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Build orderBy clause
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let orderBy: any = { createdAt: 'desc' } // default
 
     switch (sort) {
